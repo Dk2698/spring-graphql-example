@@ -1,9 +1,8 @@
 package com.example;
 
-import com.example.entity.Address;
-import com.example.entity.Book;
-import com.example.entity.Laptop;
-import com.example.entity.Student;
+import com.example.entity.*;
+import com.example.repository.CategoryRepository;
+import com.example.repository.ProductRepository;
 import com.example.repository.StudentRepository;
 import com.example.service.BookService;
 import org.slf4j.Logger;
@@ -26,6 +25,12 @@ public class SpringGraphqlExampleApplication  implements CommandLineRunner {
 
 	@Autowired
 	private StudentRepository studentRepository;
+
+	@Autowired
+	private CategoryRepository categoryRepository;
+
+	@Autowired
+	private ProductRepository productRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringGraphqlExampleApplication.class, args);
@@ -121,5 +126,57 @@ public class SpringGraphqlExampleApplication  implements CommandLineRunner {
 		student101.setAddressList(addressList);
 		Student student2 = studentRepository.save(student101);
 		logger.info("Student create  with address ");
+
+
+
+		// many to many
+		Product product1 = new Product();
+		product1.setPId("pid1");
+		product1.setProductName("iphone 14 max pro");
+
+		Product product2 = new Product();
+		product2.setPId("pid2");
+		product2.setProductName("samsung s22 ultra");
+
+		Product product3 = new Product();
+		product3.setPId("pid3");
+		product3.setProductName("Samsung TV1234");
+
+		Category category1 = new Category();
+		category1.setCId("Cid1");
+		category1.setTitle("Electronics");
+
+		Category category2 = new Category();
+		category2.setCId("Cid2");
+		category2.setTitle("Mobile Phones");
+
+		List<Product> category1products = category1.getProducts();
+		category1products.add(product1);
+		category1products.add(product2);
+		category1products.add(product3);
+
+
+		//  add element
+		 List<Product> category2products = category2.getProducts();
+		 category2products.add(product1);
+		 category2products.add(product2);
+
+
+		 // category save auto ave product  table  -> cascade all use category table
+		categoryRepository.save(category1);
+		categoryRepository.save(category2);
+
+		Category category5 = categoryRepository.findById("Cid1").get();
+		System.out.println(category5.getProducts().size());
+
+
+		Category category6 = categoryRepository.findById("Cid2").get();
+		System.out.println(category6.getProducts().size());
+
+		Product product = productRepository.findById("pid1").get();
+		System.out.println(product.getCategoryList().size());
+
+
 	}
+
 }
