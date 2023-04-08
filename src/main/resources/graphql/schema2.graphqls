@@ -1,0 +1,30 @@
+type Query{
+    allEMployees:[Employee]
+}
+
+type Employee{
+    id: ID!
+    name: String
+    salary: String
+    department: Department
+}
+
+type Department{
+    id: ID!
+    name: String
+    employees: [Employee]
+}
+
+type Mutation{
+    updateSalary(input:updateSalaryInput!):updateSalaryPayload
+}
+
+input updateSalaryInput{
+    employeeID: ID!
+    salary: String!
+}
+
+type updateSalaryPayload{
+    success: Boolean!
+    employee: Employee
+}
