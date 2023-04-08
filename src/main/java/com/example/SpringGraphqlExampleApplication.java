@@ -166,15 +166,15 @@ public class SpringGraphqlExampleApplication  implements CommandLineRunner {
 		categoryRepository.save(category1);
 		categoryRepository.save(category2);
 
-		Category category5 = categoryRepository.findById("Cid1").get();
+	/*	Category category5 = categoryRepository.findById("Cid1").get();
 		System.out.println(category5.getProducts().size());
 
 
 		Category category6 = categoryRepository.findById("Cid2").get();
 		System.out.println(category6.getProducts().size());
-
-		Product product = productRepository.findById("pid1").get();
-		System.out.println(product.getCategoryList().size());
+*/
+//		Product product = productRepository.findById("pid1").get();
+//		System.out.println(product.getCategoryList().size());
 
 
 	}
