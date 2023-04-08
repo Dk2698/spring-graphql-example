@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.entity.Address;
 import com.example.entity.Book;
 import com.example.entity.Laptop;
 import com.example.entity.Student;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @SpringBootApplication
@@ -83,5 +87,39 @@ public class SpringGraphqlExampleApplication  implements CommandLineRunner {
 
 		Laptop laptop1 = student1.getLaptop();
 		logger.info("Laptop {}, {}",laptop1.getBrand(), laptop1.getModelNumber());
+
+
+
+		// one to many
+		Student student101 = new Student();
+		student101.setStudentName("duregsh");
+		student101.setAbout("software engineer");
+		student101.setStudentId(101);
+
+		Address a1 = new Address();
+		a1.setAddressId(131);
+		a1.setStreet("12/12");
+		a1.setCity("Delhi");
+		a1.setCountry("IND");
+
+		a1.setStudent(student101);
+
+		Address a2 = new Address();
+		a2.setAddressId(112);
+		a2.setStreet("12/12");
+		a2.setCity("Bangalore");
+		a2.setCountry("IND");
+
+		// bidirectional
+		a2.setStudent(student101);
+
+
+		List<Address> addressList = new ArrayList<>();
+		addressList.add(a1);
+		addressList.add(a2);
+
+		student101.setAddressList(addressList);
+		Student student2 = studentRepository.save(student101);
+		logger.info("Student create  with address ");
 	}
 }
