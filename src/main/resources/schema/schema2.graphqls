@@ -1,4 +1,4 @@
-type Query{
+type Query2{
     allEMployees:[Employee]
 }
 
@@ -15,7 +15,7 @@ type Department{
     employees: [Employee]
 }
 
-type Mutation{
+type Mutation2{
     updateSalary(input:updateSalaryInput!):updateSalaryPayload
 }
 
